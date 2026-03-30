@@ -1,0 +1,12 @@
+{
+  "name": "rust-dev",
+  "dockerComposeFile": ["../compose.yaml"],
+  "service": "dev",
+  "workspaceFolder": "/work",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  }
+}
