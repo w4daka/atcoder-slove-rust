@@ -20,6 +20,7 @@ services:
       - ${HOME}/.config/sheldon:/root/.config/sheldon:ro
       - ${HOME}/.config/starship.toml:/root/.config/starship.toml:ro
       - ${HOME}/.config/nvim:/root/.config/nvim:ro
+      - ${HOME}/.config/skk:/root/.config/skk:ro
       - nvim-data:/root/.local/share/nvim
       - nvim-state:/root/.local/state/nvim
       - nvim-cache:/root/.cache/nvim
