@@ -21,20 +21,12 @@ RUN curl -L -o /tmp/nvim.tar.gz \
   && ln -s /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim \
   && rm -f /tmp/nvim.tar.gz
 
-# direnv
-RUN curl -sfL https://direnv.net/install.sh | bash \
-  && install -m 0755 /root/.local/bin/direnv /usr/local/bin/direnv
 
 # starship
 RUN curl -sS https://starship.rs/install.sh | sh -s -- -y -b /usr/local/bin
 
 # sheldon
-RUN curl -L -o /tmp/sheldon.tar.xz \
-      "https://github.com/rossmacarthur/sheldon/releases/download/${SHELDON_VERSION}/sheldon-${SHELDON_VERSION}-x86_64-unknown-linux-musl.tar.xz" \
-  && mkdir -p /tmp/sheldon-extract \
-  && tar -C /tmp/sheldon-extract -xJf /tmp/sheldon.tar.xz \
-  && install -m 0755 /tmp/sheldon-extract/sheldon /usr/local/bin/sheldon \
-  && rm -rf /tmp/sheldon.tar.xz /tmp/sheldon-extract
+RUN cargo install --locked sheldon --version 0.8.4
 
 WORKDIR /work
 

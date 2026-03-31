@@ -4,39 +4,29 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     working_dir: /work
     tty: true
     stdin_open: true
     volumes:
       - .:/work
-
-      # Rust cache
       - cargo-registry:/usr/local/cargo/registry
       - cargo-git:/usr/local/cargo/git
       - target:/work/target
-
-      # zsh / dotfiles
       - ${HOME}/.zshrc:/root/.zshrc:ro
       - ${HOME}/.zprofile:/root/.zprofile:ro
       - ${HOME}/.config/sheldon:/root/.config/sheldon:ro
       - ${HOME}/.config/starship.toml:/root/.config/starship.toml:ro
-
-      # nvim
       - ${HOME}/.config/nvim:/root/.config/nvim:ro
       - nvim-data:/root/.local/share/nvim
       - nvim-state:/root/.local/state/nvim
       - nvim-cache:/root/.cache/nvim
-
-      # zsh系の履歴・補完キャッシュ
-      - zsh-cache:/root/.local/share/zsh
-      - zsh-state:/root/.local/state/zsh
-
     environment:
       TERM: xterm-256color
       SHELL: /usr/bin/zsh
-
     command: sleep infinity
-
 volumes:
   cargo-registry:
   cargo-git:
@@ -44,5 +34,3 @@ volumes:
   nvim-data:
   nvim-state:
   nvim-cache:
-  zsh-cache:
-  zsh-state:
