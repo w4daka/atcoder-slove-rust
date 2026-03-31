@@ -2,16 +2,16 @@
 FROM rust:1.89-bookworm
 
 ARG NVIM_VERSION=v0.11.4
-ARG SHELDON_VERSION=0.8.4
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git ca-certificates curl xz-utils unzip \
     build-essential pkg-config \
     zsh ripgrep fd-find fzf zoxide \
-    less procps file \
+    less procps file iputils-ping \
+    wamerican \
   && rm -rf /var/lib/apt/lists/*
 
-# rust-analyzer
+# Rust tooling
 RUN rustup component add rust-analyzer
 
 # Neovim (official tarball)
@@ -21,14 +21,14 @@ RUN curl -L -o /tmp/nvim.tar.gz \
   && ln -s /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim \
   && rm -f /tmp/nvim.tar.gz
 
-
 # starship
 RUN curl -sS https://starship.rs/install.sh | sh -s -- -y -b /usr/local/bin
 
 # sheldon
 RUN cargo install --locked sheldon --version 0.8.4
 
-WORKDIR /work
+# Deno (official docs allow cargo install)
+RUN cargo install deno --locked
 
-# まずはroot運用で単純にする
+WORKDIR /work
 SHELL ["/bin/zsh", "-lc"]
